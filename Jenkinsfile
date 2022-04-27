@@ -1,9 +1,6 @@
 node {
     def app
     
-    environment {
-        PCF_FILE = credentials('palecerulean_pcf')
-    }
 
     stage('Clone repository') {
         // Let's make sure we have the repository cloned to our workspace
@@ -24,7 +21,7 @@ node {
     // }
 
        stage('establish connection to pcf') {
-        withCredentials([usernamePassword(credentialsId: 'twistlock_creds', passwordVariable: 'TL_PASS', usernameVariable: 'TL_USER')]) {
+        withCredentials([file(credentialsId: 'palecerulean_pcf', variable: 'PCF_FILE')])  {
             sh "echo $PCF_FILE > creds.json"
             sh "cat creds.json" 
             sh "echo $PCF_FILE" 
