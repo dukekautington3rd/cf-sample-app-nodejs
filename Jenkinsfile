@@ -24,7 +24,7 @@ node {
     // }
 
        stage('establish connection to pcf') {
-        steps {
+        withCredentials([usernamePassword(credentialsId: 'twistlock_creds', passwordVariable: 'TL_PASS', usernameVariable: 'TL_USER')]) {
             sh "echo $PCF_FILE > creds.json"
             sh "cat creds.json" 
             sh "echo $PCF_FILE" 
