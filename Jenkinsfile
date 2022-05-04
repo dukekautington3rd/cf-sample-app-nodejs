@@ -23,10 +23,14 @@ node {
        stage('establish connection to pcf') {
         withCredentials([file(credentialsId: 'palecerulean_pcf', variable: 'PCF_FILE')])  {
             sh "echo $PCF_FILE > creds.json"
-            sh "cat creds.json" 
-            sh "echo $PCF_FILE" 
         }
     } 
+
+        stage("Make Droplet file") {
+        docker.image('docker.io/hello-world').withRun('--entrypoint="/bin/hostname"') {
+            sh 'echo whatdoesthisdo'
+        }
+    }
 
     // stage('Scan image with twistcli') {
     //     withCredentials([usernamePassword(credentialsId: 'twistlock_creds', passwordVariable: 'TL_PASS', usernameVariable: 'TL_USER')]) {
