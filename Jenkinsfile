@@ -27,6 +27,9 @@ node {
     } 
 
         stage("Make Droplet file") {
+            options {
+                timeout(time: 5, unit: 'MINUTES') 
+            }
         docker.image('docker.io/dukekautington/pcf_client').withRun("-v creds.json:/root/creds.json -v ${PWD}:/persist --rm") {
             sh 'echo whatdoesthisdo'
         }
