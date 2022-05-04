@@ -22,7 +22,7 @@ node {
 
        stage('establish connection to pcf') {
         withCredentials([file(credentialsId: 'palecerulean_pcf', variable: 'PCF_FILE')])  {
-            sh "echo $PCF_FILE > creds.json"
+            sh "cp $PCF_FILE creds.json"
         }
     } 
 
