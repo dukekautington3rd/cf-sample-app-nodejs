@@ -27,7 +27,8 @@ node {
     } 
 
         stage("Make Droplet file") {
-        docker.image('docker.io/dukekautington/pcf_client').withRun("-v creds.json:/root/creds.json -v ${PWD}:/persist --rm") {
+            def workspace = pwd()
+        docker.image('docker.io/dukekautington/pcf_client').withRun("-v creds.json:/root/creds.json -v ${workspace}:/persist --rm") {
             sh 'echo whatdoesthisdo'
         }
     }
