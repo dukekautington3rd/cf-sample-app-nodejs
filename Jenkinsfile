@@ -33,7 +33,7 @@ node {
         stage("Make Droplet file") {
             def workspace = pwd()
         docker.image('docker.io/dukekautington/pcf_client').withRun("-it -v creds.json:/root/creds.json -v ${workspace}:/persist") {
-            sh TasScan.sh
+            sh /bin/makedroplet.sh
         }
     }
 
