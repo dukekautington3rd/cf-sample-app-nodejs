@@ -39,13 +39,17 @@ node {
     //     }
     // }
 
-    // stage('Scan image with twistcli') {
-    //     withCredentials([usernamePassword(credentialsId: 'twistlock_creds', passwordVariable: 'TL_PASS', usernameVariable: 'TL_USER')]) {
-    //         sh 'curl -k -u $TL_USER:$TL_PASS --output ./twistcli https://$TL_CONSOLE/api/v1/util/twistcli'
-    //         sh 'sudo chmod a+x ./twistcli'
-    //         sh "./twistcli images scan --u $TL_USER --p $TL_PASS --address https://$TL_CONSOLE  --details tl_demo/hellopython:${env.BUILD_ID}"
-    //     }
-    // }
+    stage('Scan droplet with twistcli') {
+        withCredentials([usernamePassword(credentialsId: 'twistlock_creds', passwordVariable: 'TL_PASS', usernameVariable: 'TL_USER')]) {
+            sh 'curl -k -u $TL_USER:$TL_PASS --output ./twistcli https://$TL_CONSOLE/api/v1/util/twistcli'
+            sh 'sudo chmod a+x ./twistcli'
+            sh "./twistcli tas scan --u $TL_USER --p $TL_PASS --address https://$TL_CONSOLE  --details ${env.JOB_NAME}:${env.BUILD_ID}"
+        }
+    }
+
+    stage('clean up') {
+            sh 'rm droplet.tgz'
+        }
 
     stage('Test image') {
             sh 'echo "Tests passed"'
