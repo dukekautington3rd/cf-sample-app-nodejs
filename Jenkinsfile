@@ -22,7 +22,9 @@ node {
 
        stage('establish connection to pcf') {
         withCredentials([file(credentialsId: 'palecerulean_pcf', variable: 'PCF_FILE')])  {
-            sh "cp $PCF_FILE creds.json"
+            // sh "cp $PCF_FILE creds.json"
+            sh "hammer -t ${PCF_FILE} cf-login"
+
         }
     } 
 
@@ -30,12 +32,12 @@ node {
         //     def workspace = pwd()
         //     sh "docker run -it -v ${workspace}:/persist -v creds.json:/root/creds.json --rm dukekautington/pcf_client"
         // }
-        stage("Make Droplet file") {
-            def workspace = pwd()
-        docker.image('docker.io/dukekautington/pcf_client').withRun('--entrypoint="/bin/makedroplet.sh"', "-it -v creds.json:/root/creds.json -v ${workspace}:/persist") {
-            sh 'sleep 60'
-        }
-    }
+    //     stage("Make Droplet file") {
+    //         def workspace = pwd()
+    //     docker.image('docker.io/dukekautington/pcf_client').withRun('--entrypoint="/bin/makedroplet.sh"', "-it -v creds.json:/root/creds.json -v ${workspace}:/persist") {
+    //         sh 'sleep 60'
+    //     }
+    // }
 
     // stage('Scan image with twistcli') {
     //     withCredentials([usernamePassword(credentialsId: 'twistlock_creds', passwordVariable: 'TL_PASS', usernameVariable: 'TL_USER')]) {
