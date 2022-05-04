@@ -22,7 +22,7 @@ node {
 
        stage('establish connection to pcf') {
         withCredentials([file(credentialsId: 'palecerulean_pcf', variable: 'PCF_FILE')])  {
-            sh "cp $PCF_FILE creds.json"
+            // sh "cp $PCF_FILE creds.json"
         }
     } 
 
@@ -32,7 +32,7 @@ node {
         // }
         stage("Make Droplet file") {
             def workspace = pwd()
-        docker.image('docker.io/dukekautington/pcf_client').withRun("--pull=always -v creds.json:/root/creds.json -v ${workspace}:/persist") {
+        docker.image('docker.io/dukekautington/pcf_client').withRun("--pull=always -v ${PCF_FILE}:/root/creds.json -v ${workspace}:/persist") {
         }
     }
 
