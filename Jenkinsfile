@@ -39,11 +39,18 @@ node {
     //     }
     // }
 
+    // stage('Scan droplet with twistcli') {
+    //     withCredentials([usernamePassword(credentialsId: 'twistlock_creds', passwordVariable: 'TL_PASS', usernameVariable: 'TL_USER')]) {
+    //         sh 'curl -k -u $TL_USER:$TL_PASS --output ./twistcli https://$TL_CONSOLE/api/v1/util/twistcli'
+    //         sh 'sudo chmod a+x ./twistcli'
+    //         sh "./twistcli tas scan --u $TL_USER --p $TL_PASS --address https://$TL_CONSOLE  --details --project ${env.JOB_NAME}:${env.BUILD_ID}" droplet.tgz
+    //     }
+    // }
     stage('Scan droplet with twistcli') {
         withCredentials([usernamePassword(credentialsId: 'twistlock_creds', passwordVariable: 'TL_PASS', usernameVariable: 'TL_USER')]) {
             sh 'curl -k -u $TL_USER:$TL_PASS --output ./twistcli https://$TL_CONSOLE/api/v1/util/twistcli'
             sh 'sudo chmod a+x ./twistcli'
-            sh "./twistcli tas scan --u $TL_USER --p $TL_PASS --address https://$TL_CONSOLE  --details --project ${env.JOB_NAME}:${env.BUILD_ID}" droplet.tgz
+            sh "./twistcli tas scan --u $TL_USER --p $TL_PASS --address https://$TL_CONSOLE  --details droplet.tgz "
         }
     }
 
