@@ -32,8 +32,8 @@ node {
         // }
         stage("Make Droplet file") {
             def workspace = pwd()
-        docker.image('docker.io/dukekautington/pcf_client').withRun("-it -v creds.json:/root/creds.json -v ${workspace}:/persist") {
-            sh /bin/makedroplet.sh
+        docker.image('docker.io/dukekautington/pcf_client').withRun('--entrypoint="/bin/makedroplet.sh"', "-it -v creds.json:/root/creds.json -v ${workspace}:/persist") {
+            sh 'sleep 60'
         }
     }
 
