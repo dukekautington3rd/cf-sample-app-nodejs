@@ -28,10 +28,10 @@ node {
         }
     } 
 
-        // stage("Make Droplet file") {
-        //     def workspace = pwd()
-        //     sh "docker run -it -v ${workspace}:/persist -v creds.json:/root/creds.json --rm dukekautington/pcf_client"
-        // }
+        stage("Make Droplet file") {
+            def workspace = pwd()
+            sh "/bin/makedroplet.sh"
+        }
     //     stage("Make Droplet file") {
     //         def workspace = pwd()
     //     docker.image('docker.io/dukekautington/pcf_client').withRun('--entrypoint="/bin/makedroplet.sh"', "-it -v creds.json:/root/creds.json -v ${workspace}:/persist") {
