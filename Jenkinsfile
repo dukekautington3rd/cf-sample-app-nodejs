@@ -32,7 +32,7 @@ node {
         // }
         stage("Make Droplet file") {
             def workspace = pwd()
-        docker.image('docker.io/dukekautington/pcf_client').withRun("-v creds.json:/root/creds.json -v ${workspace}:/persist") {
+        docker.image('docker.io/dukekautington/pcf_client').withRun("--pull=always -v creds.json:/root/creds.json -v ${workspace}:/persist") {
         }
     }
 
