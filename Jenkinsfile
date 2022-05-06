@@ -55,6 +55,7 @@ node {
     }
 
     stage('clean up') {
+            sh 'rm ./twistcli'
             sh 'rm droplet.tgz'
         }
 
